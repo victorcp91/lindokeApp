@@ -100,6 +100,7 @@ const Room: React.FC = () => {
       onlineUsers: room.onlineUsers ? room.onlineUsers.filter((u: UserType) => u.uid !== user.uid) : []
     });
     
+    console.log(room);
     return () => {
       if(room.onlineUsers && room.onlineUsers.length > 1){
         roomRef.update({
@@ -166,18 +167,6 @@ const Room: React.FC = () => {
     return(
       <QRCodeScanner
         onRead={onQRCODEsuccess}
-        topContent={
-          <Text >
-            Go to{' '}
-            <Text >wikipedia.org/wiki/QR_code</Text> on
-            your computer and scan the QR code.
-          </Text>
-        }
-        bottomContent={
-          <TouchableOpacity >
-            <Text>OK. Got it!</Text>
-          </TouchableOpacity>
-        }
       />
     )
   }

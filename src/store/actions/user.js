@@ -4,3 +4,9 @@ export function setUser(user) {
     user,
   };
 }
+
+export function logout() {
+  return {
+    type: "@user/LOGOUT",
+  };
+}

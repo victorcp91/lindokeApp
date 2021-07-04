@@ -18,3 +18,11 @@ export const Name = styled.Text`
   position: absolute;
   bottom: -6px;
 `;
+
+export const SongContainer = styled.View`
+  height: 50px;
+  max-height: 50px;
+  margin-left: -10px;
+  margin-right: 10px;
+  justify-content: center;
+`;

@@ -9,7 +9,7 @@
  */
  import 'react-native-gesture-handler';
  import React, { useState,useEffect, useRef } from 'react';
- import { View, Image,} from 'react-native';
+ import { View, Image, TouchableOpacity} from 'react-native';
  import { NavigationContainer, NavigationContainerRef, CommonActions} from '@react-navigation/native';
  import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
  import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
@@ -22,9 +22,13 @@ import database from '@react-native-firebase/database';
  import RoomsScreen from './src/screens/Rooms';
  import CreateRoomScreen from './src/screens/CreateRoom';
  import RoomStack from './src/screens/Room';
+ import ConnectRoomScreen from './src/screens/ConnectRoom';
+ import ProfileScreen from './src/screens/ProfileScreen';
 
 import ExitRoom from './src/components/ExitRoom';
 import Lindo from './src/components/Lindo';
+import PlusIcon from './src/assets/plus.svg';
+import UserIcon from './src/assets/user.svg';
 
 import { setUser } from './src/store/actions/user';
 import { setFavorites } from './src/store/actions/favorites';
@@ -33,6 +37,8 @@ import { setFavorites } from './src/store/actions/favorites';
    Login: undefined;
    Salas: undefined;
    NovaSala: undefined;
+   ConectarSala: undefined;
+   Perfil: undefined;
    Sala: {
     id: string;
     name: string;
@@ -109,14 +115,31 @@ import { setFavorites } from './src/store/actions/favorites';
         }
        }>
         <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
-        <Stack.Screen options={{headerLeft: () => <View/>}} name="Salas" component={RoomsScreen} />
+        <Stack.Screen options={{
+          headerLeft: () => <TouchableOpacity onPress={() => navigationRef.current?.navigate('Perfil')}>
+            <UserIcon width={25} height={25} strokeWidth={10} fill={color.yellow} stroke={color.yellow}/>
+          </TouchableOpacity >,
+          headerRight: () => <TouchableOpacity onPress={() => navigationRef.current?.navigate('NovaSala')}>
+            <PlusIcon width={25} height={25} strokeWidth={5} fill={color.yellow} stroke={color.yellow}/>
+          </TouchableOpacity>,
+          headerRightContainerStyle:{
+            marginRight: 10
+          },
+          headerLeftContainerStyle:{
+            marginLeft: 10
+          },}}
+          name="Salas"
+          component={RoomsScreen}
+        />
         <Stack.Screen name="NovaSala" options={{title: 'Nova Sala'}} component={CreateRoomScreen} />
+        <Stack.Screen name="ConectarSala" options={{title: 'Conectar Sala'}} component={ConnectRoomScreen} />
         <Stack.Screen options={({ route }) => ({ 
           title: route.params?.name,
           headerLeft: () => <ExitRoom />,
           headerRight: () => <Lindo />
         })
         } name="Sala" component={RoomStack}/>
+        <Stack.Screen name="Perfil" options={{title: 'Perfil'}} component={ProfileScreen} />
       </Stack.Navigator>
      </NavigationContainer>
    );
