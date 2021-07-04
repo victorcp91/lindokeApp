@@ -4,6 +4,7 @@ import { useSelector, RootStateOrAny} from 'react-redux';
 import database from '@react-native-firebase/database';
 
 
+import Lindo from '../../components/Lindo';
 import Star from '../../assets/star.svg';
 import StarStroke from '../../assets/star_stroke.svg';
 import TrashCan from '../../assets/recycle-bin.svg';
@@ -11,11 +12,18 @@ import { color } from '../../libs/variables';
 
 import { Container, Title, Song, Favorite, DeleteButton } from './styles';
 
+interface onlineUserType{
+  lindoIndex: number;
+  lindoName: string;
+  uid: string;
+}
+
 interface song {
   title: string;
   id: string;
   uid: string;
 }
+
 interface propsType{
   song: song
 } 
@@ -76,18 +84,24 @@ const PlaylistSongItem: React.FC<propsType> = ({song}) => {
     if(favorite){
       return true;
     } return false;
-  }, [favorites])
+  }, [favorites]);
+
+  const lindoId = useMemo(() => {
+    const currentUser = room.onlineUsers.find((u: onlineUserType) => u.uid === song.uid);
+    if(currentUser){
+      return currentUser.lindoIndex;
+    } return null;
+  }, [room]);
 
 
   return <Container>
     <Song>
+      {!!lindoId && <Lindo index={lindoId}/>}
       <Title>{song.title}</Title>
     </Song>
-    {user.uid === song.uid && (
-      <DeleteButton onPress={removeSong}>
-        <TrashCan width={25} height={25} fill={color.red}/>
-      </DeleteButton>
-    )}
+    <DeleteButton onPress={removeSong}>
+      <TrashCan width={25} height={25} fill={color.red}/>
+    </DeleteButton>
     <Favorite onPress={isFavorite ? removeFavorite : addFavorite}>
       {isFavorite ? (
         <Star width={25} height={25} fill={color.blue}/>

@@ -4,3 +4,9 @@ export function setRooms(rooms) {
     rooms,
   };
 }
+
+export function clearRooms() {
+  return {
+    type: "@rooms/CLEAR",
+  };
+}

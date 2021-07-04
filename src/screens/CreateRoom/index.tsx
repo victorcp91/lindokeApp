@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import { NativeSyntheticEvent,TextInputChangeEventData } from 'react-native';
 import { useSelector, RootStateOrAny } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import database from '@react-native-firebase/database';
 import auth from '@react-native-firebase/auth';
 
 import { Container,Content, Name, Create, CreateText } from './styles';
 
 const CreateRoom: React.FC = () => {
+
+  const navigation = useNavigation();
 
   const [roomName, setRoomName] = useState<string>('');
   const user = useSelector((state: RootStateOrAny) => state.user);
@@ -35,7 +38,9 @@ const CreateRoom: React.FC = () => {
             name: roomName,
             id: roomRef.key
           }
-        ]);
+        ]).then(() => {
+          navigation.navigate('Salas');
+        });
       });
     });
   }

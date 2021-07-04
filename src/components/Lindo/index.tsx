@@ -106,7 +106,7 @@ import Monster100 from '../../assets/lindos/100-monster.svg';
 
 const Monsters = [Monster1,Monster2,Monster3,Monster4,Monster5,Monster6,Monster7,Monster8,Monster9,Monster10,Monster11,Monster12,Monster13,Monster14,Monster15,Monster16,Monster17,Monster18,Monster19,Monster20,Monster21,Monster22,Monster23,Monster24,Monster25,Monster26,Monster27,Monster28,Monster29,Monster30,Monster31,Monster32,Monster33,Monster34,Monster35,Monster36,Monster37,Monster38,Monster39,Monster40,Monster41,Monster42,Monster43,Monster44,Monster45,Monster46,Monster47,Monster48,Monster49,Monster50,Monster51,Monster52,Monster53,Monster54,Monster55,Monster56,Monster57,Monster58,Monster59,Monster60,Monster61,Monster62,Monster63,Monster64,Monster65,Monster66,Monster67,Monster68,Monster69,Monster70,Monster71,Monster72,Monster73,Monster74,Monster75,Monster76,Monster77,Monster78,Monster79,Monster80,Monster81,Monster82,Monster83,Monster84,Monster85,Monster86,Monster87,Monster88,Monster89,Monster90,Monster91,Monster92,Monster93,Monster94,Monster95,Monster96,Monster97,Monster98,Monster99,Monster100];
 
-import { Container, Name } from './styles';
+import { Container, Name, SongContainer } from './styles';
 
 type onlineUserType = {
   uid: string;
@@ -116,9 +116,10 @@ type onlineUserType = {
 
 type propTypes = {
   index?: number;
+  song?: boolean;
 }
 
-const Lindo: React.FC<propTypes> = ({index}) => {
+const Lindo: React.FC<propTypes> = ({index, song = false}) => {
 
   const {user, room} = useSelector((state: RootStateOrAny) => state);
 
@@ -137,13 +138,20 @@ const Lindo: React.FC<propTypes> = ({index}) => {
     } return false;
   }, [currentUser]);
 
+  if(index && CurrentLindo){
+    return (<SongContainer>
+      <CurrentLindo width={25}/>
+    </SongContainer>)
+  }
   if(currentUser && CurrentLindo){
-    return <Container>
-      <CurrentLindo width={30}/>
-      {!index && <Name>{currentUser.lindoName}</Name>}
-    </Container>;
-  } return <></>;
- 
+    return (
+      <Container>
+        <CurrentLindo width={30}/>
+        <Name>{currentUser.lindoName}</Name>
+      </Container>
+    );
+  } 
+  return <></>;
 }
 
 export default Lindo;

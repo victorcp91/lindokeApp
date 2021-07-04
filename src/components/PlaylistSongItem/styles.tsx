@@ -11,6 +11,9 @@ export const Container = styled.View`
 
 export const Song = styled.TouchableOpacity`
   flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   margin-right: 20px;
 `;
 

@@ -3,7 +3,9 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector, RootStateOrAny } from 'react-redux';
 import database, {FirebaseDatabaseTypes} from '@react-native-firebase/database';
 
+import { color } from '../../libs/variables';
 import RoomItem from '../../components/RoomItem';
+import QRCodeIcon from '../../assets/qr-code.svg';
 
 import { Container, Content, RoomsList, CreateRoom, CreateRoomText } from './styles';
 
@@ -40,8 +42,8 @@ const Rooms: React.FC = () => {
     <RoomItem room={item}/>
   )
 
-  function goToCreationScreen(){
-    navigation.navigate('NovaSala');
+  function goToConnectScreen(){
+    navigation.navigate('ConectarSala');
   };
   
   return (
@@ -52,8 +54,11 @@ const Rooms: React.FC = () => {
           renderItem={({item}) => renderRoom(item)}
           keyExtractor={item => item.id}
         ></RoomsList>
-        <CreateRoom onPress={goToCreationScreen}>
-          <CreateRoomText>Nova sala</CreateRoomText>
+        <CreateRoom onPress={goToConnectScreen}>
+          <QRCodeIcon width={30} height={30} fill={color.blue}/>
+          <CreateRoomText>
+            Conectar sala
+          </CreateRoomText>
         </CreateRoom>
       </Content>
     </Container>

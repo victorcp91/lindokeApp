@@ -4,3 +4,9 @@ export function setFavorites(favorites) {
     favorites,
   };
 }
+
+export function clearFavorites() {
+  return {
+    type: "@favorites/CLEAR"
+  };
+}
